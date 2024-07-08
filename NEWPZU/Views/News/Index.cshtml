@@ -1,0 +1,90 @@
+﻿
+@section content{
+<!-- Start Content -->
+<section class="news-content py-5" id="news-content">
+    <div class="container">
+        <h1 class="main-title" data-i18n="newsMainTitle"> اخر الاخبار </h1>
+        <div class="content  position-relative p-5 my-4 bg-white shadow-lg">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="titles">
+                        <h5 class="mb-4 d-block news-title" id="news-title" data-i18n="newsTitle">العناوين <i class="fa-solid fa-angle-down d-md-none"></i></h5>
+                        <div id="title-list" class="list-group d-none d-md-flex">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="news-content-container" id="news-content-container">
+                        <h4 class="text-decoration-underline fs-3" id="list-item-1"></h4>
+                        <div class="card news-card border-0 rounded-0">
+                            <img src="" class="" id="news-img" alt="">
+                            <div class="card-body">
+                                <div class="news-time d-flex justify-content-around border-3 border-start border-end border-info mt-2 mb-4">
+                                    <span>التاريخ: 02/11/2024</span>
+                                    <span>منذ: 15 ساعة</span>
+                                    <span>التوقيت بتاريخ السودان 02:57</span>
+                                </div>
+                                <p class="card-text  lead" id="content">
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Content -->
+}
+
+
+@section scripts{
+<script>
+        $(document).ready(function() {
+            $('#news-title').click(function(){
+              $('.list-group').toggleClass('d-none');
+            });
+
+
+            getNews(@ViewBag.Id);
+            //Load News Title
+            $.ajax({
+                url: '/News/LoadNewsTitles?lang=' + lang,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    data.forEach(function (row) {
+                        $('#title-list').append(
+                            `
+                            <a class ="mb-2" onclick="getNews('${row.Id}')">${row.Title}</a>
+                            `
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+        //LoadData
+        function getNews(id) {
+            $.ajax({
+                url: '/News/GetNewsData?id=' + id + "&lang=" + lang ,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // Populate HTML elements with data
+                    $('#list-item-1').text(data.Title);
+                    $('#news-img').attr('src', data.Img);
+                    $('#content').text(data.Content);
+                    // Scroll the div into view
+                    $('#news-content-container')[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+</script>
+}

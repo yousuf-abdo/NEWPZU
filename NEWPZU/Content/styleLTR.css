@@ -1,0 +1,17 @@
+﻿/* Custom Style For ltr Pages */
+/* Start Navbar */
+.navbar ul.navbar-nav {
+    margin-left: auto !important;
+}
+/* End Navbar */
+/*Start Social Media*/
+.social-media {
+    margin-left: -123px;
+}
+.social-media .holder a:hover {
+    margin-left: 120px;
+}
+.social-media .holder span {
+    padding-right: 20px;
+}
+/*End Social Media*/

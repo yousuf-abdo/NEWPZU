@@ -1,0 +1,29 @@
+﻿
+@section content{
+    <!-- Start Content -->
+    <section class="airline py-5 mt-2" id="airline">
+        <div class="container">
+            <div class=" main-title-section">
+                <h2 class="main-title" data-i18n="airline"> شركات الطيران </h2>
+                <p class="lead my-3 text-center" data-i18n="airlineIntro">
+                    نتمنى لكم رحلات امنة وسعيدة
+                </p>
+            </div>
+            <div class="content  position-relative p-5 my-4 bg-white shadow-lg">
+                <div class="row gy-4" id="airline-container">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Content -->
+}
+ 
+
+@section scripts{   
+    <script>
+        $(document).ready(function () {
+            getAirline();
+        });
+    </script>
+}

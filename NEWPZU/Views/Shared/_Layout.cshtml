@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مطار بورتسودان الدولي - رحلات الوصول والمغادرة لمطار بورتسودان ">
+    <title data-i18n="aboutTitle">مطار بورتسودان الدولي</title>
+    <link rel="shortcut icon" href="~/Content/img/Logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="loader1">
+        <div class="loader-content1">
+            <!-- Loader content here -->
+        </div>
+    </div>
+
+
+
+<div id="masterContent">
+        <!--  Start Navbar  -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="/Home/Index">
+                    <img class="logo" src="~/Content/img/alt-logo.png" alt="مطار بورتسودان">
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 position-relative active" aria-current="page" data-i18n="home" href="/Home/Index">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 position-relative" data-i18n="airline" href="/Airlines/Index">خطوط الطيران</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 position-relative" data-i18n="news" href="/News/Index"> اخر الاخبار</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 position-relative" data-i18n="suggestion" href="/Suggestions/Index">شكاوي ومقترحات</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link px-3 position-relative dropdown-toggle" data-i18n="filght" href="#" role="button" data-bs-toggle="dropdown" 
+                               aria-expanded="false">
+                                جدول الرحلات
+                            </a>
+                            <ul class="dropdown-menu border-0 rounded-0">
+                                <li><a class="dropdown-item" data-i18n="departure" href="/Flights/Index/1">المغادرة</a></li>
+                                <li><a class="dropdown-item" data-i18n="arrival" href="/Flights/Index/2"> الوصول </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <select id="selectLanguage" name="selectLanguage" title="selectLanguage">
+                        <option value="ar" selected> العربية </option>
+                        <option value="en"> English </option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+        <!--  End Navbar  -->
+
+        @RenderSection("content")
+
+        <!-- Start Footer -->
+        <!-- End Footer -->
+        <!-- Start Copyright -->
+        <section class="copyright text-center text-white py-4">
+            <div class="footer-socail d-flex justify-content-center align-items-center mb-3 gap-3">
+                <a href="#" title="none"><i class="fa-brands fa-whatsapp text-white fa-2x"></i></a>
+                <a href="https://www.facebook.com/SudanAirports/" title="none"><i class="fa-brands fa-facebook text-white fa-2x"></i></a>
+                <a href="#" title="none"><i class="fa-brands fa-twitter text-white fa-2x"></i></a>
+            </div>
+            <p data-i18n="copyright" class="m-0">جميع الحقوق محفوظة لشركة مطارات السودان المحدودة 2024&copy;</p>
+        </section>
+        <!-- Start Copyright -->
+        <!-- Start Side Socail Media -->
+        <section class="social-media">
+            <div class="holder">
+                <a href="https://wa.me/0024921183841" title="none">
+                    <span>WhatsApp</span>
+                    <i class="fa-brands fa-whatsapp fa-2x"></i>
+                </a>
+                <a href="https://www.facebook.com/SudanAirports/" title="none">
+                    <span>Facebook</span>
+                    <i class="fa-brands fa-facebook fa-2x">
+                    </i>
+                </a>
+                <a href="#" title="none">
+                    <span>Twitter</span>
+                    <i class="fa-brands fa-twitter fa-2x"></i>
+                </a>
+            </div>
+        </section>
+        <!-- End Side Socail Media -->
+</div>
+    <script src="~/Scripts/all.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+    <!-- تحميل مكتبة Moment.js مع الترجمة للعربية -->
+    @*<script src="~/Scripts/moment.js"></script>*@
+    @*<script src="~/Scripts/momentjs-with-locales.js"></script>*@
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <!-- تحميل ترجمة للعربية -->
+    @*<script src="~/Scripts/moment-ar.js"></script>*@
+    <script src="https://momentjs.com/downloads/locale/ar.js"></script>
+    <script src="~/Scripts/bootstrapValidator.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/i18n.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

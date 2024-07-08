@@ -1,0 +1,212 @@
+﻿<style>
+    .main-title{
+    position: relative;
+    width: fit-content;
+    height:inherit;
+    border: 2px solid red;
+    padding: 20px 60px;
+    background-color: red;
+    color: white;
+    }
+    .dataTables_wrapper.dataTables_filter{
+        float:left !important;
+    }
+
+    .my-container{
+        --bs-gutter-x: 0;
+    }
+</style>
+@section content{
+    <!-- Start Content -->
+    <section class="flight-content container py-3" id="flight-content">
+
+        <div class="content">
+            <div class="my-container">
+                <div class="row justify-content-between">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="row">
+                            <ul class="d-flex flex-row list-unstyled p-4 justify-content-between">
+                                <li class="text-center w-auto"><a href="#" data-i18n="toMorrow" class="btn btn-outline-primary time tomorrow ">غدا </a></li>
+                                <li class="text-center w-auto"><a href="#" data-i18n="toDay" class="btn btn-outline-primary time toDay">اليوم</a></li>
+                                <li class="text-center w-auto"><a href="#" data-i18n="yesterDay" class="btn btn-outline-primary time yesterDay">أمس</a></li>
+                            </ul>
+                        </div>   
+                        <div class="row">
+                            <strong class="theDate w-100 text-center" id="theDate">@ViewBag.theDate</strong>
+                        </div>                  
+                    </div>
+
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="d-flex flex-row justify-content-between mb-3">
+                            <a href="#" id="landingBtn" class="main-title-section title-active">
+                                <i class="fas fa-plane-arrival" style="font-size:30px;"></i>
+                                <h2 class="main-title mt-4 lead" data-i18n="mainTitleLanding"> وصول </h2>
+                            </a>
+                            <a href="#" id="takeoffBtn" class=" main-title-section">
+                                <i class="fas fa-plane-departure" style="font-size:30px;"></i>
+                                <h2 class="main-title  mt-4 lead" data-i18n="mainTitleTakeoff"> مغادرة </h2>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row m-0 p-0">
+            <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="background-color: #062e6f;width: 220px;color: white;" data-i18n="dtAirline" >الشركة</th>
+                        <th style="background-color: #062e6f;width: 220px;color: white;" data-i18n="dtStatus">الحالة</th>
+                        <th style="background-color: #062e6f;width: 220px;color: white;" data-i18n="dtTime">الزمن</th>
+                        <th style="background-color: #062e6f;width: 220px;color: white;" data-i18n="dtTo">الوجهه</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </section>
+    <!-- End Content -->
+
+}
+
+@section scripts{
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script>
+        var currentLang = localStorage.getItem("lang") || "ar";
+        var dateValue = 0;
+        var FlightTypeId = 0;
+
+        // Get the current date
+        const currentDate = new Date();
+        const formattedCurrentDate = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`;
+
+        // Calculate the next date
+        const nextDate = new Date(currentDate);
+        nextDate.setDate(currentDate.getDate() + 1);
+        const formattedNextDate = `${nextDate.getDate().toString().padStart(2, '0')}-${(nextDate.getMonth() + 1).toString().padStart(2, '0')}-${nextDate.getFullYear()}`;
+
+        // Calculate the next date
+        const yesterDay = new Date(currentDate);
+        yesterDay.setDate(currentDate.getDate() - 1);
+        const formattedYesterDay = `${yesterDay.getDate().toString().padStart(2, '0')}-${(yesterDay.getMonth() + 1).toString().padStart(2, '0')}-${yesterDay.getFullYear()}`;
+
+        $('#landingBtn').on("click", function(){
+            $('#landingBtn').addClass("title-active");
+            $('#takeoffBtn').removeClass("title-active");
+            FlightTypeId = 2;
+            loadData(FlightTypeId, dateValue);
+        });
+        $('#takeoffBtn').on("click", function(){
+            $('#takeoffBtn').addClass("title-active");
+            $('#landingBtn').removeClass("title-active");
+            FlightTypeId = 1;
+            loadData(FlightTypeId, dateValue);
+        });
+
+        $('.tomorrow').on("click", function () {
+            dateValue = 1;
+            $('#theDate').text(formattedNextDate);
+            loadData(FlightTypeId, dateValue);
+        });
+
+        $('.toDay').on("click", function () {
+            dateValue = 0;
+            $('#theDate').text(formattedCurrentDate);
+            loadData(FlightTypeId, dateValue);
+        });
+
+        $('.yesterDay').on("click", function () {
+            dateValue = -1;
+            $('#theDate').text(formattedYesterDay);
+            loadData(FlightTypeId, dateValue);
+        });
+
+        $(document).ready(function () {
+            $('#theDate').text(formattedCurrentDate);
+            loadData(FlightTypeId, dateValue);
+        });
+
+        function loadData(flightTypeId, theDate) {
+            if (currentLang == "ar") {
+                sLengthMenu = "عرض _MENU_ حقول ";
+                sZeroRecords = "لا توجد بيانات";
+                sInfo = "عرض _START_ الي _END_ من _TOTAL_ سجل";
+                sInfoEmpty = "عرض 0 الي 0 من 0 سجل";
+                sInfoFiltered = "(filtered from _MAX_ total records)";
+                sNext = "التالي",
+                sPrevious = "االسابق",
+                sSearch = "بحث"
+            } else {
+                sLengthMenu = "Display _MENU_ records per page";
+                sZeroRecords = "Nothing found - Sorry";
+                sInfo = "Showing _START_ to _END_ of _TOTAL_ records";
+                sInfoEmpty = "Showing 0 to 0 of 0 records";
+                sInfoFiltered = "(filtered from _MAX_ total records)";
+                sNext = "Next",
+                sPrevious = "Previous",
+                sSearch = "Search..."
+            }
+
+            // Initialize DataTable
+            $('#example').DataTable({
+                destroy: true,
+                searching: false,
+                orderable: false,
+                bLengthChange: false,
+                iDisplayLength: 10,
+                bFilter: false,
+                pagingType: "simple",
+                responsive: true,
+                ajax: {
+                    url: '/Flights/LoadData?FlightTypeId=' + flightTypeId + '&Lang=' + currentLang + '&theDate=' + theDate,
+                    type: 'GET',
+                    dataSrc: ''
+                },
+                columns: [
+                    {
+                        //"title": "الشركة",
+                        "data": "Airline",
+                        "orderable": false,
+                    },
+                    {
+                         //"title": "الوقت",
+                         "data": "Time",
+                         "orderable": false,
+                    },
+                    //{
+                    //     "title": "التاريخ",
+                    //     "data": "Date",
+                    //     "orderable": false,
+                    //},
+                    {
+                        //"title": "الحالة",
+                        "data": "Status",
+                        "orderable": false,
+                    },
+                    {
+                         //"title": "الوجهه",
+                         "data": "FlighTo",
+                         "orderable": false,
+                    },
+                ],
+                "oLanguage": {
+                    "sLengthMenu": sLengthMenu,
+                    "sZeroRecords": sZeroRecords,
+                    "sInfo": sInfo,
+                    "sInfoEmpty": sInfoEmpty,
+                    "sInfoFiltered": sInfoFiltered,
+                    "sSearch": sSearch,
+                    "oPaginate": {
+                        "sNext": sNext,
+                        "sPrevious": sPrevious,
+                    },
+                    "sUrl": "~/Scripts/i18n.js",
+                },
+            });
+        }
+    </script>
+}
